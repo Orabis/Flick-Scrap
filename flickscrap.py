@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 from utils.dl_img import download_image
-from utils.http_request import make_requests
+from utils.http_request import make_requests, get_all_albums
 
 initial_url = input("type the gallery url (https://www.flickr.com/PHOTOS/.../) \n :")
 base_url = initial_url.strip()
@@ -35,6 +35,6 @@ match int(initial_option):
                 print("No images found stopping !")
                 break
     case 2:
-        print("2")
+        get_all_albums(initial_url)
     case _:
         raise ValueError("unreachable option")

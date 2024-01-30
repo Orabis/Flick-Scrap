@@ -1,4 +1,5 @@
 import requests
+from bs4 import BeautifulSoup
 
 
 def make_requests(initial_url):
@@ -10,3 +11,13 @@ def make_requests(initial_url):
     except requests.RequestException as e:
         print(f"{e} \n i guess you gave a wrong link")
         return None
+
+
+def get_all_albums(initial_url):
+    initial_url = initial_url + str("/albums/")
+    r = make_requests(initial_url)
+    soup = BeautifulSoup(r.content, "html.parser")
+    for album in soup.find_all('a', attrs={'title': True}):
+        print(album)
+    return None
+
