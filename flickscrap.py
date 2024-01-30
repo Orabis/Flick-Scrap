@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 from utils.dl_img import download_image
-from utils.requests import make_requests
+from utils.http_request import make_requests
 
 initial_url = input("type the gallery url (https://www.flickr.com/PHOTOS/.../) \n :")
 

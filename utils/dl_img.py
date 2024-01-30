@@ -1,5 +1,5 @@
 import os
-from utils.requests import make_requests
+from utils.http_request import make_requests
 
 
 def download_image(url, img_name):
