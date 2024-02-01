@@ -19,5 +19,8 @@ match int(initial_option):
         for album in albums:
             print(f"id: {album['id']} name: {album['title']}")
         albums_picked = [int(item) for item in input("Enter the list items (separated with space)").split()]
+        links = [item["link"] for item in albums if item["id"] in albums_picked]
+        pre_dl(links, base_url)
+
     case _:
         raise ValueError("unreachable option")
