@@ -55,5 +55,5 @@ def while_dl(initial_url, base_url, come_from_list):
                 break
         page_number = page_number + 1
         if soup.select_one(f'link[href="{base_url}/page{page_number}/"][rel="next"]') is None:
-            print("No images found stopping !")
+            print("No next page found, stopping !")
             break

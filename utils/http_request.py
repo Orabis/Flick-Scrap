@@ -1,5 +1,6 @@
 import time
 import requests
+import re
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
@@ -33,19 +34,31 @@ def make_request_selenium(initial_url):
         (print(f"{e} \n Error"))
 
 
-def get_all_albums(initial_url):
+def get_all_albums(initial_url, base_url):
     albums = []
     iid = 1
-    initial_url = initial_url + str("/albums/")
-    r = make_request_selenium(initial_url)
-    soup = BeautifulSoup(r.page_source, "html.parser")
-    for album in soup.find_all(
-            lambda tag: tag.name == 'a' and tag.get('href', '').startswith('/photos/') and tag.get("title")):
-        link = f"https://www.flickr.com{album.get('href')}/"
-        albums.append(
-            {"id": iid, "link": link, "title": album.get('title')}
-        )
-        iid += 1
-    if not albums:
-        raise Exception("No albums found did you enter a correct link ?")
+    page_number = 1
+    while True:
+        index = initial_url.rfind('page')
+        initial_url = initial_url + str("/albums")
+        if index != -1:
+            initial_url = initial_url[:index] + f"page{page_number}"
+        else:
+            initial_url = f"{initial_url}/page{page_number}"
+        r = make_request_selenium(initial_url)
+        soup = BeautifulSoup(r.page_source, "html.parser")
+        for album in soup.find_all(
+                lambda tag: tag.name == 'a' and tag.get('href', '').startswith('/photos/') and tag.get("title")):
+            link = f"https://www.flickr.com{album.get('href')}"
+            albums.append(
+                {"id": iid, "link": link, "title": album.get('title')}
+            )
+            iid += 1
+        if not albums:
+            raise Exception("No albums found did you enter a correct link ?")
+        page_number = page_number + 1
+        soup_url = f'link[href="{base_url}/albums/page{page_number}/"][rel="next"]'
+        if soup.select_one(soup_url) is None:
+            print("No next page found, stopping !")
+            break
     return albums

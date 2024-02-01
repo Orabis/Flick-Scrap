@@ -15,7 +15,7 @@ match int(initial_option):
     case 1:
         pre_dl(initial_url, base_url)
     case 2:
-        albums = get_all_albums(initial_url)
+        albums = get_all_albums(initial_url, base_url)
         for album in albums:
             print(f"id: {album['id']} name: {album['title']}")
         albums_picked = [int(item) for item in input("Enter the list items (separated with space)").split()]
