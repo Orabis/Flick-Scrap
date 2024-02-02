@@ -7,7 +7,7 @@
 from utils.dl_img import pre_dl
 from utils.http_request import get_all_albums
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 initial_url = input("type the gallery url (https://www.flickr.com/PHOTOS/.../) \n:")
 while not initial_url.startswith("https://www.flickr.com/photos/"):

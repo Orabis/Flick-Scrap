@@ -1,4 +1,4 @@
-# FlickScrap - Script de Scraping pour Flickr
+# FlickScrap 1.1.0 | Script de Scraping pour Flickr
 
 FlickScrap est un script en Python qui vous permet de récupérer des images depuis un lien d'album Flickr. Il propose deux modes de fonctionnement : récupération de toutes les images disponibles ou choix spécifique des galeries à télécharger. Les résultats seront stockés dans un dossier "output".
 

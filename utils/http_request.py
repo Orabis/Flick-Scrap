@@ -1,6 +1,5 @@
 import time
 import requests
-import re
 
 import selenium.common.exceptions
 from bs4 import BeautifulSoup
