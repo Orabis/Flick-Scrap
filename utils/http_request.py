@@ -1,6 +1,8 @@
 import time
 import requests
 import re
+
+import selenium.common.exceptions
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
@@ -12,7 +14,7 @@ def make_requests(initial_url):
         r = s.get(initial_url, headers={"User-Agent": user_agent})
         return r
     except requests.RequestException as e:
-        print(f"{e} \n i guess you gave a wrong link")
+        print(f"{e} \n Error making the request")
         return None
 
 
@@ -30,8 +32,8 @@ def make_request_selenium(initial_url):
             last_height = new_height
 
         return browser
-    except Exception as e:
-        (print(f"{e} \n Error"))
+    except selenium.common.exceptions as e:
+        (print(f"{e} \n Error making request with selenium"))
 
 
 def get_all_albums(initial_url, base_url):
@@ -39,7 +41,7 @@ def get_all_albums(initial_url, base_url):
     iid = 1
     page_number = 1
     while True:
-        index = initial_url.rfind('page')
+        index = initial_url.rfind("page")
         initial_url = initial_url + str("/albums")
         if index != -1:
             initial_url = initial_url[:index] + f"page{page_number}"
@@ -48,17 +50,17 @@ def get_all_albums(initial_url, base_url):
         r = make_request_selenium(initial_url)
         soup = BeautifulSoup(r.page_source, "html.parser")
         for album in soup.find_all(
-                lambda tag: tag.name == 'a' and tag.get('href', '').startswith('/photos/') and tag.get("title")):
+            lambda tag: tag.name == "a"
+            and tag.get("href", "").startswith("/photos/")
+            and tag.get("title")
+        ):
             link = f"https://www.flickr.com{album.get('href')}"
-            albums.append(
-                {"id": iid, "link": link, "title": album.get('title')}
-            )
+            albums.append({"id": iid, "link": link, "title": album.get("title")})
             iid += 1
         if not albums:
             raise Exception("No albums found did you enter a correct link ?")
         page_number = page_number + 1
         soup_url = f'link[href="{base_url}/albums/page{page_number}/"][rel="next"]'
         if soup.select_one(soup_url) is None:
-            print("No next page found, stopping !")
             break
     return albums
