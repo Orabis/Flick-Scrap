@@ -28,32 +28,44 @@ def pre_dl(initial_urls, base_url):
 def goto_album_and_dl(initial_url):
     r = make_request_selenium(initial_url)
     soup = BeautifulSoup(r.page_source, "html.parser")
-    for link in soup.find_all(lambda tag: tag.name == 'a' and tag.get('href', '').startswith('/photos/') and 'overlay' in tag.get('class', [])):
+    for link in soup.find_all(
+        lambda tag: tag.name == "a"
+        and tag.get("href", "").startswith("/photos/")
+        and "overlay" in tag.get("class", [])
+    ):
         link = f"https://www.flickr.com{link.get('href')}"
         while_dl(link, link, True)
-    print("download done")
+    print("download end")
 
 
 def while_dl(initial_url, base_url, come_from_list):
     page_number = 1
     while True:
-        if not come_from_list:
-            index = initial_url.rfind('page')
-            if index != -1:
-                initial_url = initial_url[:index] + f"page{page_number}"
-            else:
-                initial_url = f"{initial_url}/page{page_number}"
-        print(f"making gallery {initial_url}")
-        r = make_requests(initial_url)
-        soup = BeautifulSoup(r.content, "html.parser")
-        for link in soup.find_all("img"):
-            cleaned_link = link.get("src")
-            cleaned_link = cleaned_link.replace("//", "https://")
-            img_name = re.search(r"/([^/]+\.jpg)$", cleaned_link).group(1)
-            download_image(cleaned_link, img_name)
-            if come_from_list:
+        try:
+            if not come_from_list:
+                index = initial_url.rfind("page")
+                if index != -1:
+                    initial_url = initial_url[:index] + f"page{page_number}"
+                else:
+                    initial_url = f"{initial_url}/page{page_number}"
+            print(f"making gallery {initial_url}")
+            r = make_requests(initial_url)
+            soup = BeautifulSoup(r.content, "html.parser")
+            for link in soup.find_all("img"):
+                cleaned_link = link.get("src")
+                cleaned_link = cleaned_link.replace("//", "https://")
+                img_name = re.search(r"/([^/]+\.jpg)$", cleaned_link).group(1)
+                download_image(cleaned_link, img_name)
+                if come_from_list:
+                    break
+            page_number = page_number + 1
+            if (
+                soup.select_one(
+                    f'link[href="{base_url}/page{page_number}/"][rel="next"]'
+                )
+                is None
+            ):
+                print("No next page found !")
                 break
-        page_number = page_number + 1
-        if soup.select_one(f'link[href="{base_url}/page{page_number}/"][rel="next"]') is None:
-            print("No next page found, stopping !")
-            break
+        except AttributeError:
+            raise Exception("No imgs found, abort")

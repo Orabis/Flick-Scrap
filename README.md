@@ -1,4 +1,4 @@
-# FlickScrap - Script de Scraping pour Flickr
+# FlickScrap 1.1.0 | Script de Scraping pour Flickr
 
 FlickScrap est un script en Python qui vous permet de récupérer des images depuis un lien d'album Flickr. Il propose deux modes de fonctionnement : récupération de toutes les images disponibles ou choix spécifique des galeries à télécharger. Les résultats seront stockés dans un dossier "output".
 
@@ -37,13 +37,18 @@ FlickScrap est un script en Python qui vous permet de récupérer des images dep
 
 ## Avertissement
 
-Avis de non-responsabilité
-Ce projet inclut des fonctionnalités de web scraping conçues uniquement à des fins éducatives. Le code associé a été développé dans le seul but d'explorer les concepts du web scraping dans un contexte pédagogique.
+Disclaimer:
+This project includes web scraping features designed solely for educational purposes. The associated code has been developed with the sole intention of exploring web scraping concepts in an educational context.
 
-Le scraping de sites web peut violer les conditions d'utilisation et les politiques de protection des données de certains sites, y compris Flickr. L'auteur de ce projet décline toute responsabilité pour tout usage inapproprié, non autorisé ou en violation des conditions d'utilisation du site.
+Web scraping may violate the terms of service and data protection policies of some websites, including Flickr. The author of this project disclaims any responsibility for any misuse, unauthorized use, or violation of the site's terms of service.
+It should not be used for any real-world application or request.
+It is the responsibility of the end user to ensure that the use of this code complies with all applicable laws, rules, and regulations, as well as the terms of use of the targeted sites.
 
-Il est de la responsabilité de l'utilisateur final de s'assurer que l'utilisation de ce code respecte toutes les lois, règles et régulations applicables, ainsi que les conditions d'utilisation des sites ciblés.
+The author strongly encourages respect for copyright, data privacy, and adherence to ethical policies when using the provided code. It should be used solely for instructional purposes, and no data is recorded.
 
-L'auteur encourage vivement le respect des droits d'auteur, la confidentialité des données et le respect des politiques éthiques lors de l'utilisation du code fourni.
 
 ---
+### Contact
+
+- Léo Merkel
+- cdf.leo.merkel@gmail.com
